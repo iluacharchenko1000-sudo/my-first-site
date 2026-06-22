@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Колесо Фортуны — Кастомная Рулетка</title>
+    <title>Колесо Фортуны</title>
     <style>
         * {
             box-sizing: border-box;
@@ -16,77 +16,48 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
             padding: 16px;
             margin: 0;
-            touch-action: pan-y;
         }
         .container {
             max-width: 700px;
             width: 100%;
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 60px 60px 40px 40px;
             padding: 30px 20px 35px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-            transition: all 0.2s;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
         }
-
         h1 {
             text-align: center;
-            font-weight: 400;
-            letter-spacing: 2px;
             font-size: 1.9rem;
             color: #f0eaff;
-            text-shadow: 0 4px 20px rgba(100, 80, 255, 0.3);
             margin-bottom: 12px;
-            word-break: break-word;
-            font-weight: 600;
         }
-        h1 span {
-            background: linear-gradient(135deg, #b7aaff, #7f6eff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* ----- КОЛЕСО ----- */
         .wheel-wrapper {
             position: relative;
             width: 100%;
             max-width: 420px;
-            margin: 10px auto 10px;
+            margin: 10px auto;
             aspect-ratio: 1/1;
-            touch-action: none;
         }
         .wheel-wrapper canvas {
             display: block;
             width: 100% !important;
             height: 100% !important;
             border-radius: 50%;
-            box-shadow: 0 12px 50px rgba(0, 0, 0, 0.9), 0 0 0 4px rgba(255, 215, 100, 0.15), 0 0 30px rgba(150, 100, 255, 0.3);
-            transition: box-shadow 0.3s;
+            box-shadow: 0 12px 50px rgba(0,0,0,0.9);
             background: #1b1f2e;
-            touch-action: none;
             cursor: grab;
         }
-        .wheel-wrapper canvas:active {
-            cursor: grabbing;
-        }
-
-        /* стрелка */
         .pointer {
             position: absolute;
             top: -14px;
             left: 50%;
             transform: translateX(-50%);
             font-size: 44px;
-            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.8));
             z-index: 10;
-            text-shadow: 0 0 20px #ffd966;
-            line-height: 1;
             pointer-events: none;
             color: #ffe484;
         }
@@ -95,8 +66,6 @@
             display: block;
             text-align: center;
         }
-
-        /* центр колеса */
         .center-btn {
             position: absolute;
             top: 50%;
@@ -107,65 +76,31 @@
             border-radius: 50%;
             background: radial-gradient(circle at 30% 30%, #434a6b, #1b1f30);
             border: 3px solid #f5e7b0;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4), inset 0 -4px 8px rgba(0,0,0,0.6);
+            box-shadow: 0 0 30px rgba(255,215,0,0.4);
             color: #f5e7b0;
             font-size: 1.8rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.15s;
             cursor: pointer;
-            touch-action: manipulation;
-            user-select: none;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 6px black;
             z-index: 10;
         }
         .center-btn:active {
             transform: translate(-50%, -50%) scale(0.92);
-            border-color: #ffdd77;
         }
-
-        /* ----- НАСТРОЙКИ (секции) ----- */
         .settings-panel {
             margin-top: 28px;
-            background: rgba(12, 15, 26, 0.7);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            background: rgba(12,15,26,0.7);
             border-radius: 40px;
             padding: 20px 18px 18px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
         }
-
-        .section-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #afb9e6;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            padding-bottom: 8px;
-        }
-        .section-label span {
-            background: #2f3650;
-            padding: 0 12px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            color: #c8d0ff;
-        }
-
         .options-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 10px 12px;
             align-items: center;
             justify-content: center;
-            margin-bottom: 4px;
         }
         .options-grid label {
             display: flex;
@@ -173,54 +108,26 @@
             gap: 6px;
             color: #d2daff;
             font-size: 0.95rem;
-            background: rgba(255,255,255,0.02);
-            padding: 6px 12px 6px 10px;
+            padding: 6px 12px;
             border-radius: 40px;
-            border: 1px solid rgba(255,255,255,0.02);
         }
-        .options-grid input[type="number"],
-        .options-grid select {
+        .options-grid input[type="number"] {
             background: #0f121f;
             border: 1px solid #3a3f5e;
             border-radius: 30px;
             padding: 8px 14px;
             color: #f0f4ff;
-            font-weight: 500;
-            font-size: 0.95rem;
             width: 80px;
             outline: none;
-            transition: 0.2s;
-        }
-        .options-grid input:focus,
-        .options-grid select:focus {
-            border-color: #9b89ff;
-            box-shadow: 0 0 0 2px rgba(130, 100, 255, 0.3);
-        }
-        .options-grid select {
-            width: 100px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23aab3dd' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            appearance: none;
-            padding-right: 36px;
         }
         .options-grid input[type="color"] {
             width: 44px;
             height: 44px;
             border: 2px solid #3d4468;
             border-radius: 40px;
-            background: transparent;
             padding: 2px;
             cursor: pointer;
         }
-        .options-grid input[type="color"]::-webkit-color-swatch-wrapper {
-            padding: 0;
-        }
-        .options-grid input[type="color"]::-webkit-color-swatch {
-            border-radius: 40px;
-            border: none;
-        }
-
         .flex-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -236,32 +143,15 @@
             font-weight: 600;
             font-size: 1rem;
             color: #eef4ff;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 6px 0 #121624, 0 6px 16px rgba(0,0,0,0.4);
-            transition: 0.07s linear;
+            box-shadow: 0 6px 0 #121624;
             cursor: pointer;
-            touch-action: manipulation;
-            border: 1px solid rgba(255,255,255,0.03);
-            letter-spacing: 0.3px;
         }
         .btn:active {
             transform: translateY(6px);
-            box-shadow: 0 1px 0 #121624;
         }
         .btn-primary {
             background: linear-gradient(145deg, #6a5cd6, #4f3db3);
-            border-color: #8b7ae8;
-            box-shadow: 0 6px 0 #2f2666, 0 8px 24px rgba(90, 60, 200, 0.4);
             color: white;
-        }
-        .btn-primary:active {
-            box-shadow: 0 1px 0 #2f2666;
-        }
-        .btn-secondary {
-            background: #2d324f;
-            border-color: #4d5479;
         }
         .result-box {
             text-align: center;
@@ -273,223 +163,88 @@
             background: rgba(0,0,0,0.3);
             border-radius: 60px;
             padding: 12px 14px;
-            border: 1px solid rgba(255,215,0,0.1);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-            word-break: break-word;
-        }
-        .result-box span {
-            background: #2b2f4b;
-            padding: 4px 16px;
-            border-radius: 40px;
-            font-size: 1.1rem;
-            color: #b7c0f0;
-        }
-
-        /* адаптив */
-        @media (max-width: 500px) {
-            .container { padding: 16px 12px 20px; border-radius: 40px; }
-            h1 { font-size: 1.5rem; }
-            .options-grid label { font-size: 0.8rem; padding: 4px 8px; }
-            .options-grid input[type="number"] { width: 64px; padding: 6px 8px; }
-            .btn { padding: 12px 18px; font-size: 0.9rem; }
-            .pointer { font-size: 32px; top: -10px; }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>🎡 <span>Колесо</span> Фортуны</h1>
-
+    <h1>🎡 Колесо Фортуны</h1>
     <div class="wheel-wrapper">
         <canvas id="wheelCanvas" width="600" height="600"></canvas>
         <div class="pointer"></div>
         <div class="center-btn" id="spinBtn">🎲</div>
     </div>
-
     <div class="settings-panel">
-        <div class="section-label">⚙️ Настройки <span>секции</span></div>
-
         <div class="options-grid">
             <label>Кол-во <input type="number" id="segmentsCount" value="6" min="2" max="20"></label>
             <label>Цвет фона <input type="color" id="bgColor" value="#1b1f2e"></label>
         </div>
-
-        <div class="section-label" style="margin-top:6px;">🎨 Палитра секторов</div>
-        <div class="options-grid" id="colorPaletteContainer">
-            <!-- сгенерируется из js -->
-        </div>
-
         <div class="flex-buttons">
             <button class="btn btn-primary" id="applyBtn">⟳ Применить</button>
-            <button class="btn btn-secondary" id="randomizeBtn">🎲 Случайно</button>
-            <button class="btn btn-secondary" id="resetDefaultBtn">↺ Сброс</button>
+            <button class="btn" id="randomizeBtn">🎲 Случайно</button>
+            <button class="btn" id="resetDefaultBtn">↺ Сброс</button>
         </div>
-
-        <div class="result-box" id="resultDisplay">
-            <span>⚡</span> Нажмите на центр или «Применить»
-        </div>
+        <div class="result-box" id="resultDisplay">⚡ Нажмите на центр</div>
     </div>
 </div>
 <script>
     (function() {
-        // ----- настройки по умолчанию -----
         const DEFAULT_SEGMENTS = 6;
         const DEFAULT_BG = '#1b1f2e';
         const DEFAULT_COLORS = ['#FF6B6B','#4ECDC4','#FFE66D','#A29BFE','#FD79A8','#00CEC9','#FDCB6E','#6C5CE7','#00B894','#E17055','#0984E3','#F368E0'];
-
-        // ----- состояние -----
+        
         let segments = [];
-        let currentRotation = 0;        // текущий угол поворота (радианы)
+        let currentRotation = 0;
         let isSpinning = false;
         let animationId = null;
 
-        // элементы
         const canvas = document.getElementById('wheelCanvas');
         const ctx = canvas.getContext('2d');
         const spinBtn = document.getElementById('spinBtn');
         const resultDisplay = document.getElementById('resultDisplay');
-
-        // поля настроек
         const segmentsCountInput = document.getElementById('segmentsCount');
         const bgColorInput = document.getElementById('bgColor');
-        const colorContainer = document.getElementById('colorPaletteContainer');
-
-        // кнопки
         const applyBtn = document.getElementById('applyBtn');
         const randomizeBtn = document.getElementById('randomizeBtn');
         const resetDefaultBtn = document.getElementById('resetDefaultBtn');
 
-        // ---- вспомогательные функции ----
         function generateDefaultSegments(count) {
             const segs = [];
-            const baseColors = DEFAULT_COLORS.slice();
             for (let i = 0; i < count; i++) {
-                const color = baseColors[i % baseColors.length];
-                segs.push({
-                    label: String(i + 1),
-                    color: color
-                });
+                segs.push({ label: String(i + 1), color: DEFAULT_COLORS[i % DEFAULT_COLORS.length] });
             }
             return segs;
         }
 
-        // пересоздать сегменты с сохранением цвета (если возможно)
-        function rebuildSegments(newCount, keepColors = true) {
-            const oldSegs = segments.slice();
-            const newSegs = [];
-            for (let i = 0; i < newCount; i++) {
-                let label = String(i + 1);
-                let color = DEFAULT_COLORS[i % DEFAULT_COLORS.length];
-                if (keepColors && i < oldSegs.length) {
-                    color = oldSegs[i].color || color;
-                    label = oldSegs[i].label || label;
-                }
-                newSegs.push({ label, color });
-            }
-            segments = newSegs;
-            renderColorPickers();
-            drawWheel();
-        }
-
-        // отрисовать палитру (input color для каждого сектора)
-        function renderColorPickers() {
-            colorContainer.innerHTML = '';
-            segments.forEach((seg, idx) => {
-                const wrap = document.createElement('div');
-                wrap.style.display = 'inline-flex';
-                wrap.style.alignItems = 'center';
-                wrap.style.gap = '4px';
-                wrap.style.background = 'rgba(255,255,255,0.02)';
-                wrap.style.padding = '2px 6px 2px 2px';
-                wrap.style.borderRadius = '40px';
-
-                const label = document.createElement('span');
-                label.textContent = seg.label;
-                label.style.fontSize = '0.7rem';
-                label.style.color = '#bcc7f0';
-                label.style.minWidth = '18px';
-                label.style.textAlign = 'center';
-
-                const picker = document.createElement('input');
-                picker.type = 'color';
-                picker.value = seg.color;
-                picker.style.width = '36px';
-                picker.style.height = '36px';
-                picker.style.border = '2px solid #3d4468';
-                picker.style.borderRadius = '40px';
-                picker.style.background = 'transparent';
-                picker.style.padding = '2px';
-                picker.style.cursor = 'pointer';
-                picker.setAttribute('data-index', idx);
-                picker.addEventListener('input', function(e) {
-                    const index = parseInt(this.getAttribute('data-index'), 10);
-                    if (!isNaN(index) && segments[index]) {
-                        segments[index].color = this.value;
-                        drawWheel();
-                    }
-                });
-                wrap.appendChild(label);
-                wrap.appendChild(picker);
-                colorContainer.appendChild(wrap);
-            });
-        }
-
-        // ----- ОТРИСОВКА КОЛЕСА (с поворотом) -----
         function drawWheel() {
-            const w = canvas.width;
-            const h = canvas.height;
-            const centerX = w / 2;
-            const centerY = h / 2;
+            const w = canvas.width, h = canvas.height;
+            const centerX = w/2, centerY = h/2;
             const radius = Math.min(w, h) * 0.44;
-
             ctx.clearRect(0, 0, w, h);
-
-            // фон
             const bg = bgColorInput.value || DEFAULT_BG;
             ctx.fillStyle = bg;
             ctx.beginPath();
             ctx.arc(centerX, centerY, radius + 6, 0, Math.PI * 2);
             ctx.fill();
-
-            if (!segments || segments.length === 0) {
-                ctx.fillStyle = '#888';
-                ctx.font = 'bold 20px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('Нет секций', centerX, centerY);
-                return;
-            }
-
+            if (!segments || segments.length === 0) return;
             const count = segments.length;
             const angleStep = (Math.PI * 2) / count;
-
             for (let i = 0; i < count; i++) {
                 const startAngle = i * angleStep + currentRotation;
                 const endAngle = startAngle + angleStep;
-
-                // заливка
                 ctx.beginPath();
                 ctx.moveTo(centerX, centerY);
                 ctx.arc(centerX, centerY, radius, startAngle, endAngle);
                 ctx.closePath();
                 ctx.fillStyle = segments[i].color || '#777';
                 ctx.fill();
-
-                // обводка
                 ctx.strokeStyle = 'rgba(255,255,240,0.25)';
                 ctx.lineWidth = 1.5;
                 ctx.stroke();
-
-                // текст (повернутый)
-                const midAngle = startAngle + angleStep / 2;
+                const midAngle = startAngle + angleStep/2;
                 const textRadius = radius * 0.70;
                 const x = centerX + Math.cos(midAngle) * textRadius;
                 const y = centerY + Math.sin(midAngle) * textRadius;
-
                 ctx.save();
                 ctx.translate(x, y);
                 ctx.rotate(midAngle + (midAngle > Math.PI/2 ? Math.PI : 0));
@@ -499,61 +254,30 @@
                 ctx.shadowColor = 'rgba(0,0,0,0.7)';
                 ctx.shadowBlur = 8;
                 ctx.fillStyle = '#fff';
-                ctx.shadowOffsetX = 1;
-                ctx.shadowOffsetY = 2;
                 ctx.fillText(segments[i].label, 0, 0);
                 ctx.restore();
             }
-
-            // внутренний обод
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-            ctx.strokeStyle = 'rgba(255,215,100,0.25)';
-            ctx.lineWidth = 4;
-            ctx.stroke();
-
-            // внешний блик
-            const grad = ctx.createRadialGradient(centerX-20, centerY-30, 10, centerX, centerY, radius+10);
-            grad.addColorStop(0, 'rgba(255,255,255,0.04)');
-            grad.addColorStop(0.7, 'rgba(255,255,255,0)');
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, radius+6, 0, Math.PI*2);
-            ctx.fillStyle = grad;
-            ctx.fill();
         }
 
-        // ----- ВРАЩЕНИЕ (анимация) -----
         function spinWheel() {
             if (isSpinning) return;
-            if (!segments || segments.length < 2) {
-                resultDisplay.innerHTML = '⚠️ Добавьте хотя бы 2 секции';
-                return;
-            }
-
+            if (!segments || segments.length < 2) return;
             isSpinning = true;
             spinBtn.style.opacity = '0.5';
             resultDisplay.innerHTML = '🌀 Крутим...';
-
-            const spins = 5 + Math.random() * 6;         // 5-11 полных оборотов
+            const spins = 5 + Math.random() * 6;
             const extraAngle = Math.random() * Math.PI * 2;
             const totalRotation = spins * Math.PI * 2 + extraAngle;
-
             const startRotation = currentRotation;
             const targetRotation = startRotation + totalRotation;
-            const duration = 3000 + Math.random() * 1500; // 3-4.5 сек
+            const duration = 3000 + Math.random() * 1500;
             const startTime = performance.now();
-
-            // функция анимации
             function animate(now) {
                 const elapsed = now - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-                // easing: easeOutQuart
                 const ease = 1 - Math.pow(1 - progress, 4);
-                const currentAngle = startRotation + totalRotation * ease;
-
-                currentRotation = currentAngle;
+                currentRotation = startRotation + totalRotation * ease;
                 drawWheel();
-
                 if (progress < 1) {
                     animationId = requestAnimationFrame(animate);
                 } else {
@@ -561,102 +285,63 @@
                     drawWheel();
                     isSpinning = false;
                     spinBtn.style.opacity = '1';
-                    // определяем результат
-                    const winnerIndex = getWinnerIndex();
-                    if (winnerIndex !== -1 && segments[winnerIndex]) {
-                        resultDisplay.innerHTML = `🎉 Выпало: <strong style="font-size:2rem;background:${segments[winnerIndex].color};padding:0 20px;border-radius:60px;color:#000;text-shadow:0 0 10px white;">${segments[winnerIndex].label}</strong>`;
-                    } else {
-                        resultDisplay.innerHTML = '❌ Ошибка определения сектора';
+                    const count = segments.length;
+                    const angleStep = (Math.PI * 2) / count;
+                    const upAngle = -Math.PI / 2;
+                    let rawAngle = (upAngle - currentRotation) % (Math.PI * 2);
+                    if (rawAngle < 0) rawAngle += Math.PI * 2;
+                    const idx = Math.floor(rawAngle / angleStep) % count;
+                    if (segments[idx]) {
+                        resultDisplay.innerHTML = '🎉 Выпало: ' + segments[idx].label;
                     }
                 }
             }
             animationId = requestAnimationFrame(animate);
         }
 
-        // определить индекс победителя (по направлению вверх, 12 часов)
-        function getWinnerIndex() {
-            if (!segments || segments.length === 0) return -1;
-            const count = segments.length;
-            const angleStep = (Math.PI * 2) / count;
-            // направление «вверх» = -PI/2 (или 3*PI/2)
-            const upAngle = -Math.PI / 2;
-            // угол от центра до указателя (в мировых координатах)
-            let rawAngle = (upAngle - currentRotation) % (Math.PI * 2);
-            if (rawAngle < 0) rawAngle += Math.PI * 2;
-            const idx = Math.floor(rawAngle / angleStep);
-            return idx % count;
-        }
-
-        // ----- ОБНОВЛЕНИЕ (применить настройки) -----
         function applySettings() {
             if (isSpinning) return;
             let newCount = parseInt(segmentsCountInput.value, 10);
             if (isNaN(newCount) || newCount < 2) newCount = 2;
             if (newCount > 20) newCount = 20;
             segmentsCountInput.value = newCount;
-
-            // перестроить сегменты (сохраняем цвета, если есть)
-            rebuildSegments(newCount, true);
+            segments = generateDefaultSegments(newCount);
             drawWheel();
-
-            resultDisplay.innerHTML = `✅ Обновлено: ${newCount} секций`;
+            resultDisplay.innerHTML = '✅ Обновлено: ' + newCount + ' секций';
         }
 
-        // ----- СЛУЧАЙНЫЕ ЦВЕТА -----
         function randomizeColors() {
             if (isSpinning) return;
-            const randomColor = () => {
-                const hue = Math.floor(Math.random() * 360);
-                return `hsl(${hue}, 70%, 55%)`;
-            };
             segments.forEach(seg => {
-                seg.color = randomColor();
+                seg.color = 'hsl(' + Math.floor(Math.random() * 360) + ', 70%, 55%)';
             });
-            renderColorPickers();
             drawWheel();
-            resultDisplay.innerHTML = '🎨 Цвета изменены случайно';
+            resultDisplay.innerHTML = '🎨 Цвета изменены';
         }
 
-        // ----- СБРОС (по умолчанию) -----
         function resetToDefault() {
             if (isSpinning) return;
             segmentsCountInput.value = DEFAULT_SEGMENTS;
             bgColorInput.value = DEFAULT_BG;
             segments = generateDefaultSegments(DEFAULT_SEGMENTS);
             currentRotation = 0;
-            renderColorPickers();
             drawWheel();
-            resultDisplay.innerHTML = '↺ Сброшено на стандарт';
+            resultDisplay.innerHTML = '↺ Сброшено';
         }
 
-        // ----- инициализация -----
         function init() {
             segments = generateDefaultSegments(DEFAULT_SEGMENTS);
             segmentsCountInput.value = DEFAULT_SEGMENTS;
             bgColorInput.value = DEFAULT_BG;
-            renderColorPickers();
             drawWheel();
-
-            // события
             spinBtn.addEventListener('click', spinWheel);
             applyBtn.addEventListener('click', applySettings);
             randomizeBtn.addEventListener('click', randomizeColors);
             resetDefaultBtn.addEventListener('click', resetToDefault);
-
-            // колесо можно крутить по клику на canvas (доп. удобство)
-            canvas.addEventListener('click', (e) => {
-                if (!isSpinning) spinWheel();
-            });
-
-            // пересчет при изменении количества через enter
+            canvas.addEventListener('click', spinWheel);
             segmentsCountInput.addEventListener('change', applySettings);
-            // фон
-            bgColorInput.addEventListener('input', () => {
-                if (!isSpinning) drawWheel();
-            });
+            bgColorInput.addEventListener('input', drawWheel);
         }
-
-        // старт
         init();
     })();
 </script>
